@@ -1,157 +1,709 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Joyeux Anniversaire Maman ❤️</title>
-<style>
-    body {
-        margin: 0;
-        font-family: "Arial", sans-serif;
-        background: linear-gradient(135deg, #ffdde1, #ee9ca7);
-        text-align: center;
-        color: #333;
-        overflow-x: hidden;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joyeux Anniversaire Maman !</title>
 
-    h1 {
-        margin-top: 40px;
-        font-size: 2.4em;
-        animation: fadeIn 2s ease-in-out;
-    }
+    <!-- Chargement de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(-20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
+    <!-- Polices Google Fonts : Playfair Display (titres élégants) & Montserrat (lecture fluide) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,700;1,400;1,600&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Montserrat"', 'sans-serif'],
+                    },
+                    colors: {
+                        cream: '#FFFBF7',
+                        blush: '#FADADD',
+                        rosegold: '#D48C94',
+                        rosegoldDark: '#B76E79',
+                        gold: '#E5B869',
+                        plum: '#4A2C36',
+                    }
+                }
+            }
+        }
+    </script>
 
-    .btn {
-        margin-top: 20px;
-        padding: 15px 25px;
-        font-size: 1.2em;
-        border: none;
-        border-radius: 12px;
-        background: #ff6f91;
-        color: white;
-        cursor: pointer;
-        transition: 0.3s;
-    }
+    <style>
+        body {
+            background-color: #FFFBF7;
+            color: #4A2C36;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
 
-    .btn:hover {
-        background: #ff3d71;
-        transform: scale(1.05);
-    }
+        /* Lueur dorée sur le titre principal */
+        .glow-text {
+            text-shadow: 0 0 25px rgba(229, 184, 105, 0.4), 0 4px 15px rgba(183, 110, 121, 0.2);
+        }
 
-    .message {
-        display: none;
-        margin-top: 20px;
-        font-size: 1.4em;
-        padding: 20px;
-        animation: fadeIn 1s ease-in-out;
-    }
+        /* Enveloppe 3D interactive */
+        .envelope-wrapper {
+            perspective: 1000px;
+        }
+        .envelope-flap {
+            transform-origin: top center;
+            transition: transform 0.85s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 30;
+        }
+        .envelope-open .envelope-flap {
+            transform: rotateX(180deg);
+            z-index: 5;
+        }
+        .envelope-letter {
+            transition: transform 0.95s cubic-bezier(0.34, 1.4, 0.64, 1) 0.35s;
+        }
+        .envelope-open .envelope-letter {
+            transform: translateY(-85px) scale(1.05);
+        }
+        .wax-seal {
+            animation: pulseSeal 2s infinite ease-in-out;
+        }
+        @keyframes pulseSeal {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 0 0 rgba(183, 110, 121, 0.5); }
+            50% { transform: translate(-50%, -50%) scale(1.08); box-shadow: 0 0 0 12px rgba(183, 110, 121, 0); }
+        }
 
-    /* Confettis */
-    canvas {
-        position: fixed;
-        top: 0;
-        left: 0;
-        pointer-events: none;
-    }
-</style>
+        /* Flammes des bougies animées */
+        .flame {
+            transform-origin: center bottom;
+            animation: flicker 0.35s infinite alternate ease-in-out;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .flame:nth-child(even) {
+            animation-duration: 0.45s;
+            animation-delay: 0.1s;
+        }
+        @keyframes flicker {
+            0% { transform: scale(1) rotate(-2deg); opacity: 0.95; }
+            50% { transform: scale(1.06, 0.94) rotate(2deg); opacity: 1; }
+            100% { transform: scale(0.95, 1.05) rotate(-1deg); opacity: 0.9; }
+        }
+
+        /* Fumée au souffle des bougies */
+        .smoke {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .candle-out .flame {
+            opacity: 0 !important;
+            transform: scale(0) !important;
+            animation: none;
+        }
+        .candle-out .smoke {
+            animation: riseSmoke 2s ease-out forwards;
+        }
+        @keyframes riseSmoke {
+            0% { opacity: 0.8; transform: translateY(0) scale(0.6); }
+            50% { opacity: 0.4; transform: translateY(-20px) translateX(5px) scale(1.2); }
+            100% { opacity: 0; transform: translateY(-50px) translateX(-5px) scale(1.8); }
+        }
+
+        /* Flottement des ballons */
+        @keyframes floatBalloon {
+            0%, 100% { transform: translateY(0px) rotate(-3deg); }
+            50% { transform: translateY(-15px) rotate(3deg); }
+        }
+        .balloon-float {
+            animation: floatBalloon 4s ease-in-out infinite;
+        }
+        .balloon-float:nth-child(2) { animation-delay: -1.3s; animation-duration: 4.5s; }
+
+        /* Notes de musique volantes */
+        .floating-note {
+            position: fixed;
+            pointer-events: none;
+            z-index: 45;
+            font-size: 1.5rem;
+            color: #B76E79;
+            animation: floatNote 2.8s ease-out forwards;
+        }
+        @keyframes floatNote {
+            0% { opacity: 0; transform: translateY(0) scale(0.7) rotate(-10deg); }
+            20% { opacity: 1; }
+            100% { opacity: 0; transform: translateY(-120px) translateX(25px) scale(1.3) rotate(15deg); }
+        }
+
+        /* Carte effet verre dépoli / papier noble */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(229, 184, 105, 0.4);
+            box-shadow: 0 15px 35px -10px rgba(74, 44, 54, 0.08);
+        }
+    </style>
 </head>
-<body>
+<body class="antialiased selection:bg-blush selection:text-plum">
 
-<canvas id="confetti"></canvas>
+    <!-- Canvas pour particules en arrière-plan (pétales / cœurs flottants) -->
+    <canvas id="bg-particles" class="fixed inset-0 pointer-events-none z-0"></canvas>
 
-<h1>🎉 Joyeux Anniversaire Maman ❤️</h1>
+    <!-- Canvas pour les explosions de confettis -->
+    <canvas id="confetti-canvas" class="fixed inset-0 pointer-events-none z-50"></canvas>
 
-<button class="btn" onclick="showMessage()">Clique ici pour ta surprise 🌸</button>
+    <!-- ==========================================
+         1. ÉCRAN D'OUVERTURE : ENVELOPPE 3D
+         ========================================== -->
+    <div id="intro-overlay" class="fixed inset-0 z-40 flex flex-col items-center justify-center bg-gradient-to-br from-[#FFF5F7] via-[#FFFBF7] to-[#FDE8EC] px-4 transition-all duration-1000">
+        <div class="text-center mb-8">
+            <span class="inline-block px-4 py-1.5 rounded-full bg-white/80 border border-rosegold/30 text-rosegoldDark text-xs sm:text-sm font-medium tracking-widest uppercase shadow-sm mb-3">
+                Pour la plus merveilleuse des mamans
+            </span>
+            <h2 class="font-serif text-2xl sm:text-4xl text-plum font-bold">
+                Un message spécial t'attend
+            </h2>
+        </div>
 
-<div class="message" id="surpriseMessage">
-    Coucou Maman je souhaitai te dire merci 
-    pour tous ce que tu fais au quotidien tu dis faire 
-    des efforts et tu dis que personnes ne s'en appercoit 
-    mais nous on le voit on ne te le dit pas mais on le voit !!! .  
-    <br><br>
-    **Je t’aime de tout mon cœur ❤️**
-    Joyeux anniversaire 🎉🥳🎂🎊
-    Raphaël 
-</div>
+        <!-- Enveloppe Interactive -->
+        <div id="envelope-container" onclick="openEnvelope()" class="envelope-wrapper relative w-72 h-48 sm:w-96 sm:h-64 cursor-pointer group select-none">
+            <div class="absolute inset-0 bg-[#F3D1D8] rounded-2xl shadow-2xl border border-rosegold/30"></div>
+            
+            <div class="envelope-letter absolute inset-x-4 top-4 bottom-4 bg-cream rounded-xl shadow-md p-4 flex flex-col items-center justify-center text-center border border-gold/40 z-10">
+                <p class="font-serif italic text-rosegoldDark text-lg sm:text-2xl">Joyeux Anniversaire !</p>
+                <div class="w-12 h-0.5 bg-gold/60 my-2"></div>
+                <p class="text-xs text-plum/70">Touche le cœur pour ouvrir ❤️</p>
+            </div>
 
-<script>
-// Affichage du message
-function showMessage() {
-    document.getElementById("surpriseMessage").style.display = "block";
-    startConfetti();
-}
+            <svg class="absolute inset-0 w-full h-full z-20 rounded-2xl pointer-events-none" viewBox="0 0 400 260" preserveAspectRatio="none">
+                <polygon points="0,0 200,145 0,260" fill="#FADADD" />
+                <polygon points="400,0 200,145 400,260" fill="#F8CFD4" />
+                <polygon points="0,260 200,130 400,260" fill="#FCE4E8" stroke="#E5B869" stroke-width="1" stroke-opacity="0.4"/>
+            </svg>
 
-// Confettis simples
-let canvas = document.getElementById('confetti');
-let ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+            <div class="envelope-flap absolute top-0 inset-x-0 h-1/2 pointer-events-none">
+                <svg class="w-full h-full drop-shadow-md" viewBox="0 0 400 130" preserveAspectRatio="none">
+                    <polygon points="0,0 400,0 200,130" fill="#F4C2C9" stroke="#E5B869" stroke-width="1" stroke-opacity="0.5"/>
+                </svg>
+            </div>
 
-let confettis = [];
+            <!-- Sceau de cire cœur -->
+            <div class="wax-seal absolute top-1/2 left-1/2 z-30 w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-rosegold to-rosegoldDark border-2 border-gold flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                <svg class="w-8 h-8 sm:w-9 sm:h-9 text-cream drop-shadow" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+            </div>
+        </div>
 
-function startConfetti() {
-    for (let i = 0; i < 200; i++) {
-        confettis.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height - canvas.height,
-            size: Math.random() * 6 + 3,
-            speed: Math.random() * 3 + 2
-        });
-    }
-    animateConfetti();
-}
+        <p class="mt-8 text-sm sm:text-base text-rosegoldDark font-medium animate-bounce">
+            ✨ Clique sur le cœur pour ouvrir ta carte ✨
+        </p>
+    </div>
 
-function animateConfetti() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    <!-- ==========================================
+         CONTROLES FLOTTANTS (COMMANDE MUSIQUE / CONFETTIS)
+         ========================================== -->
+    <header class="fixed top-4 right-4 left-4 z-30 flex justify-between items-center pointer-events-none max-w-5xl mx-auto">
+        <div class="pointer-events-auto">
+            <button onclick="launchConfettiBurst(window.innerWidth / 2, window.innerHeight / 3, 70)" title="Lancer des confettis" class="p-2.5 rounded-full bg-white/80 hover:bg-white text-gold shadow-md border border-gold/40 backdrop-blur-md transition-transform hover:scale-110 active:scale-95">
+                🎉
+            </button>
+        </div>
 
-    confettis.forEach(c => {
-        c.y += c.speed;
-        if (c.y > canvas.height) c.y = -10;
+        <div class="pointer-events-auto">
+            <button id="music-toggle-btn" onclick="toggleMusic()" class="flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-rosegold to-rosegoldDark text-white text-xs sm:text-sm font-medium shadow-lg hover:shadow-xl transition-all hover:scale-105 active:scale-95">
+                <span id="music-icon">🎵</span>
+                <span id="music-label">Mélodie</span>
+            </button>
+        </div>
+    </header>
 
-        ctx.fillStyle = `hsl(${Math.random() * 360}, 70%, 60%)`;
-        ctx.fillRect(c.x, c.y, c.size, c.size);
-    });
+    <!-- ==========================================
+         CONTENU PRINCIPAL
+         ========================================== -->
+    <main id="main-content" class="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 pt-16 pb-20 space-y-12 sm:space-y-16 opacity-0 transition-opacity duration-1000">
 
-    requestAnimationFrame(animateConfetti);
-}
-</script>
-<!-- Bouton pour ouvrir la vidéo -->
-<button class="btn" onclick="openVideo()">Voir la vidéo 🎬</button>
+        <!-- EN-TÊTE AVEC TITRE ET BALLONS INTERACTIFS -->
+        <section class="text-center relative pt-6">
+            <!-- Ballon interactif gauche -->
+            <div class="absolute left-2 sm:-left-12 -top-4 balloon-float cursor-pointer select-none" onclick="popBalloon(this, event)" title="Clique pour faire éclater le ballon !">
+                <svg class="w-10 h-14 sm:w-14 sm:h-20 drop-shadow-md text-rosegold" fill="currentColor" viewBox="0 0 50 70">
+                    <ellipse cx="25" cy="25" rx="20" ry="24"/>
+                    <polygon points="25,49 21,55 29,55"/>
+                    <path d="M25,55 Q20,62 25,70" stroke="#B76E79" stroke-width="1.5" fill="none"/>
+                </svg>
+            </div>
+            
+            <!-- Ballon interactif droit -->
+            <div class="absolute right-2 sm:-right-12 -top-4 balloon-float cursor-pointer select-none" onclick="popBalloon(this, event)" title="Clique pour faire éclater le ballon !">
+                <svg class="w-10 h-14 sm:w-14 sm:h-20 drop-shadow-md text-gold" fill="currentColor" viewBox="0 0 50 70">
+                    <ellipse cx="25" cy="25" rx="20" ry="24"/>
+                    <polygon points="25,49 21,55 29,55"/>
+                    <path d="M25,55 Q30,62 25,70" stroke="#E5B869" stroke-width="1.5" fill="none"/>
+                </svg>
+            </div>
 
-<!-- Fenêtre vidéo -->
-<div id="videoPopup" style="
-    display:none;
-    position: fixed;
-    top:0; left:0;
-    width:100%; height:100%;
-    background: rgba(0,0,0,0.8);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    z-index: 9999;
-">
-    <video id="videoPlayer" controls style="width:90%; max-width:600px; border-radius:12px;">
-        <source src="https://files.catbox.moe/xqmfkj.mp4" type="video/mp4">
-    </video>
-</div>
+            <h1 class="font-serif text-4xl sm:text-6xl font-bold text-plum leading-tight glow-text tracking-wide">
+                Joyeux Anniversaire Maman
+            </h1>
 
-<script>
-function openVideo() {
-    document.getElementById("videoPopup").style.display = "flex";
-    document.getElementById("videoPlayer").play();
-}
+            <div class="flex items-center justify-center gap-4 pt-3">
+                <span class="h-px w-16 bg-gradient-to-r from-transparent to-gold"></span>
+                <span class="text-gold text-lg">❦</span>
+                <span class="h-px w-16 bg-gradient-to-l from-transparent to-gold"></span>
+            </div>
+        </section>
 
-// Fermer si on clique en dehors de la vidéo
-document.getElementById("videoPopup").onclick = function(e) {
-    if (e.target === this) {
-        this.style.display = "none";
-        document.getElementById("videoPlayer").pause();
-    }
-}
-</script>
+        <!-- =========================================================================
+             GRANDE CARTE CENTRALE POUR TON LONG MESSAGE (100% PURE ET SANS BOUTONS)
+             ========================================================================= -->
+        <section class="glass-card rounded-3xl p-6 sm:p-12 relative border-2 border-gold/30 shadow-xl">
+            <div class="flex items-center justify-center mb-8 pb-4 border-b border-rosegold/20">
+                <span class="text-xs font-semibold uppercase tracking-widest text-rosegoldDark flex items-center gap-2">
+                    <span>💌</span> Un message du cœur
+                </span>
+            </div>
+
+            <div class="space-y-6 font-serif text-plum/90 leading-relaxed text-base sm:text-xl">
+
+                <!-- ================================================================= -->
+                <!-- ⬇️ COLLE TON LONG MESSAGE DIRECTEMENT ICI ENTRE LES BALISES <p> ⬇️ -->
+                <!-- ================================================================= -->
+
+                <p class="first-letter:text-4xl first-letter:font-bold first-letter:text-rosegoldDark first-letter:mr-1">
+                    Chère Maman,
+                </p>
+
+                <p>
+                    En ce jour si particulier, je tenais à prendre le temps de t'écrire ces quelques mots du fond du cœur. 
+                </p>
+
+                <p>
+                    Merci pour ta bienveillance infinie, pour ton soutien inconditionnel au quotidien et pour tous ces souvenirs précieux que nous continuons de créer ensemble. Tu sais apporter une lumière et une douceur uniques autour de toi.
+                </p>
+
+                <p>
+                    Je te souhaite une merveilleuse année remplie de joie, de rires, d'une excellente santé et de tous les plus grands et plus petits bonheurs que tu mérites tant.
+                </p>
+
+                <p class="pt-4 italic text-rosegoldDark font-medium">
+                    Très joyeux anniversaire Maman !
+                </p>
+
+                <!-- ================================================================= -->
+                <!-- ⬆️ FIN DE TON MESSAGE ⬆️ -->
+                <!-- ================================================================= -->
+
+                <!-- SIGNATURE EN BAS DE CARTE -->
+                <div class="pt-8 mt-8 border-t border-rosegold/15 text-right font-sans font-semibold text-rosegoldDark text-sm sm:text-base tracking-wide">
+                    — Avec tout mon amour ❤️
+                </div>
+            </div>
+        </section>
+
+        <!-- GÂTEAU D'ANNIVERSAIRE INTERACTIF (SOUFFLER LES BOUGIES) -->
+        <section class="glass-card rounded-3xl p-6 sm:p-10 text-center relative overflow-hidden">
+            <span class="text-xs font-semibold uppercase tracking-widest text-rosegoldDark">Une petite tradition</span>
+            <h2 class="font-serif text-2xl sm:text-3xl font-bold text-plum mt-1 mb-2">
+                Souffle tes bougies !
+            </h2>
+            <p id="cake-instruction" class="text-xs sm:text-sm text-plum/75 mb-6">
+                Clique sur chaque bougie pour l'éteindre et faire un vœu ✨
+            </p>
+
+            <!-- Illustration du Gâteau SVG -->
+            <div class="relative max-w-xs mx-auto pt-4 pb-2 select-none">
+                <svg viewBox="0 0 320 250" class="w-full h-auto drop-shadow-xl overflow-visible">
+                    <!-- Assiette -->
+                    <ellipse cx="160" cy="230" rx="140" ry="15" fill="#F3E5D8" stroke="#E5B869" stroke-width="2"/>
+                    <ellipse cx="160" cy="227" rx="120" ry="10" fill="#FFFBF7"/>
+
+                    <!-- Étage du gâteau -->
+                    <path d="M60,150 L60,215 C60,225 260,225 260,215 L260,150 Z" fill="#FADADD"/>
+                    <path d="M60,150 C60,140 260,140 260,150 L260,165 C248,175 235,160 220,170 C205,180 190,160 175,172 C160,182 145,160 130,172 C115,182 100,160 80,170 C68,178 60,160 60,165 Z" fill="#FFFDFB"/>
+                    <ellipse cx="160" cy="150" rx="100" ry="16" fill="#FFE8EC" stroke="#E5B869" stroke-width="1.5"/>
+
+                    <!-- BOUGIE 1 -->
+                    <g id="candle-1" onclick="blowCandle(1, event)" class="cursor-pointer group">
+                        <rect x="108" y="105" width="10" height="42" rx="3" fill="#FFF" stroke="#E5B869" stroke-width="1.2"/>
+                        <path d="M108,115 L118,121 M108,127 L118,133" stroke="#D48C94" stroke-width="2.5"/>
+                        <line x1="113" y1="105" x2="113" y2="98" stroke="#4A2C36" stroke-width="1.5"/>
+                        <circle cx="113" cy="88" r="20" fill="transparent"/>
+                        <g class="flame">
+                            <path d="M113,72 C106,82 107,93 113,96 C119,93 120,82 113,72 Z" fill="#FF9E2C"/>
+                            <path d="M113,79 C109,85 110,92 113,94 C116,92 117,85 113,79 Z" fill="#FFF394"/>
+                        </g>
+                        <path class="smoke" d="M113,95 Q108,85 114,75 T112,55" fill="none" stroke="#A89F9E" stroke-width="2.5" stroke-linecap="round"/>
+                    </g>
+
+                    <!-- BOUGIE 2 -->
+                    <g id="candle-2" onclick="blowCandle(2, event)" class="cursor-pointer group">
+                        <rect x="155" y="98" width="10" height="48" rx="3" fill="#FFF" stroke="#E5B869" stroke-width="1.2"/>
+                        <path d="M155,108 L165,114 M155,120 L165,126 M155,132 L165,138" stroke="#E5B869" stroke-width="2.5"/>
+                        <line x1="160" y1="98" x2="160" y2="91" stroke="#4A2C36" stroke-width="1.5"/>
+                        <circle cx="160" cy="81" r="20" fill="transparent"/>
+                        <g class="flame">
+                            <path d="M160,65 C153,75 154,86 160,89 C166,86 167,75 160,65 Z" fill="#FF9E2C"/>
+                            <path d="M160,72 C156,78 157,85 160,87 C163,85 164,78 160,72 Z" fill="#FFF394"/>
+                        </g>
+                        <path class="smoke" d="M160,88 Q165,78 159,68 T161,48" fill="none" stroke="#A89F9E" stroke-width="2.5" stroke-linecap="round"/>
+                    </g>
+
+                    <!-- BOUGIE 3 -->
+                    <g id="candle-3" onclick="blowCandle(3, event)" class="cursor-pointer group">
+                        <rect x="202" y="105" width="10" height="42" rx="3" fill="#FFF" stroke="#E5B869" stroke-width="1.2"/>
+                        <path d="M202,115 L212,121 M202,127 L212,133" stroke="#D48C94" stroke-width="2.5"/>
+                        <line x1="207" y1="105" x2="207" y2="98" stroke="#4A2C36" stroke-width="1.5"/>
+                        <circle cx="207" cy="88" r="20" fill="transparent"/>
+                        <g class="flame">
+                            <path d="M207,72 C200,82 201,93 207,96 C213,93 214,82 207,72 Z" fill="#FF9E2C"/>
+                            <path d="M207,79 C203,85 204,92 207,94 C210,92 211,85 207,79 Z" fill="#FFF394"/>
+                        </g>
+                        <path class="smoke" d="M207,95 Q202,85 208,75 T206,55" fill="none" stroke="#A89F9E" stroke-width="2.5" stroke-linecap="round"/>
+                    </g>
+                </svg>
+            </div>
+
+            <div id="wish-celebration" class="hidden mt-4 space-y-3">
+                <p class="font-serif italic text-lg sm:text-xl text-rosegoldDark font-semibold">
+                    🌟 Ton vœu s'est envolé ! Que cette journée soit magique ! 🌟
+                </p>
+                <button onclick="relightCandles()" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blush/70 hover:bg-blush text-plum text-xs font-medium transition-colors">
+                    🕯️ Rallumer les bougies
+                </button>
+            </div>
+        </section>
+
+        <!-- PIED DE PAGE DISCRET -->
+        <footer class="text-center pt-6">
+            <p class="font-serif italic text-lg text-rosegoldDark">
+                Joyeux Anniversaire encore une fois ! 🥂🎂
+            </p>
+        </footer>
+    </main>
+
+    <!-- ==========================================
+         JAVASCRIPT (ANIMATIONS & AUDIO)
+         ========================================== -->
+    <script>
+        /* ----------------------------------------------------
+           1. OUVERTURE DE L'ENVELOPPE 3D
+           ---------------------------------------------------- */
+        let isEnvelopeOpened = false;
+
+        function openEnvelope() {
+            if (isEnvelopeOpened) return;
+            isEnvelopeOpened = true;
+
+            const container = document.getElementById('envelope-container');
+            const overlay = document.getElementById('intro-overlay');
+            const mainContent = document.getElementById('main-content');
+
+            container.classList.add('envelope-open');
+            launchConfettiBurst(window.innerWidth / 2, window.innerHeight / 2, 120);
+
+            setTimeout(() => {
+                overlay.style.opacity = '0';
+                overlay.style.pointerEvents = 'none';
+                mainContent.style.opacity = '1';
+
+                setTimeout(() => {
+                    launchConfettiBurst(window.innerWidth * 0.2, window.innerHeight * 0.3, 50);
+                    launchConfettiBurst(window.innerWidth * 0.8, window.innerHeight * 0.3, 50);
+                }, 300);
+
+                setTimeout(() => overlay.style.display = 'none', 1000);
+            }, 1100);
+        }
+
+        /* ----------------------------------------------------
+           2. SOUFFLER LES BOUGIES DU GÂTEAU
+           ---------------------------------------------------- */
+        const candlesState = { 1: true, 2: true, 3: true };
+
+        function blowCandle(id, event) {
+            if (!candlesState[id]) return;
+            candlesState[id] = false;
+
+            const candleEl = document.getElementById(`candle-${id}`);
+            candleEl.classList.add('candle-out');
+            playBlowSound();
+
+            const rect = candleEl.getBoundingClientRect();
+            launchConfettiBurst(rect.left + rect.width / 2, rect.top, 20);
+
+            if (!candlesState[1] && !candlesState[2] && !candlesState[3]) {
+                setTimeout(() => {
+                    document.getElementById('wish-celebration').classList.remove('hidden');
+                    document.getElementById('cake-instruction').classList.add('hidden');
+                    launchConfettiBurst(window.innerWidth / 2, window.innerHeight / 2, 130);
+                    if (!isPlayingMusic) toggleMusic();
+                }, 300);
+            }
+        }
+
+        function relightCandles() {
+            [1, 2, 3].forEach(id => {
+                candlesState[id] = true;
+                document.getElementById(`candle-${id}`).classList.remove('candle-out');
+            });
+            document.getElementById('wish-celebration').classList.add('hidden');
+            document.getElementById('cake-instruction').classList.remove('hidden');
+        }
+
+        /* ----------------------------------------------------
+           3. BALLONS INTERACTIFS (ÉCLATEMENT)
+           ---------------------------------------------------- */
+        function popBalloon(el, event) {
+            const rect = el.getBoundingClientRect();
+            launchConfettiBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, 35);
+            playPopSound();
+            
+            el.style.transition = 'transform 0.15s ease, opacity 0.15s ease';
+            el.style.transform = 'scale(1.4)';
+            el.style.opacity = '0';
+            setTimeout(() => {
+                el.style.display = 'none';
+            }, 150);
+        }
+
+        /* ----------------------------------------------------
+           4. MUSIQUE (WEB AUDIO API)
+           ---------------------------------------------------- */
+        let audioCtx = null;
+        let isPlayingMusic = false;
+        let musicTimeout = null;
+
+        const birthdayMelody = [
+            { f: 261.63, d: 0.35 }, { f: 261.63, d: 0.25 }, { f: 293.66, d: 0.6 }, { f: 261.63, d: 0.6 }, { f: 349.23, d: 0.6 }, { f: 329.63, d: 1.1 },
+            { f: 261.63, d: 0.35 }, { f: 261.63, d: 0.25 }, { f: 293.66, d: 0.6 }, { f: 261.63, d: 0.6 }, { f: 392.00, d: 0.6 }, { f: 349.23, d: 1.1 },
+            { f: 261.63, d: 0.35 }, { f: 261.63, d: 0.25 }, { f: 523.25, d: 0.6 }, { f: 440.00, d: 0.6 }, { f: 349.23, d: 0.6 }, { f: 329.63, d: 0.6 }, { f: 293.66, d: 1.1 },
+            { f: 466.16, d: 0.35 }, { f: 466.16, d: 0.25 }, { f: 440.00, d: 0.6 }, { f: 349.23, d: 0.6 }, { f: 392.00, d: 0.6 }, { f: 349.23, d: 1.3 }
+        ];
+
+        function initAudioContext() {
+            if (!audioCtx) {
+                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContextClass();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        function playMusicNote(freq, duration) {
+            if (!audioCtx || !isPlayingMusic) return;
+            const now = audioCtx.currentTime;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, now);
+
+            gain.gain.setValueAtTime(0.001, now);
+            gain.gain.exponentialRampToValueAtTime(0.18, now + 0.03);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + duration * 1.3);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(now);
+            osc.stop(now + duration * 1.4);
+        }
+
+        function playBlowSound() {
+            try {
+                initAudioContext();
+                const bufferSize = audioCtx.sampleRate * 0.2;
+                const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+                const data = buffer.getChannelData(0);
+                for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+
+                const noise = audioCtx.createBufferSource();
+                noise.buffer = buffer;
+                const filter = audioCtx.createBiquadFilter();
+                filter.type = 'lowpass';
+                filter.frequency.value = 500;
+
+                const gain = audioCtx.createGain();
+                gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.18);
+
+                noise.connect(filter);
+                filter.connect(gain);
+                gain.connect(audioCtx.destination);
+                noise.start();
+            } catch (e) {}
+        }
+
+        function playPopSound() {
+            try {
+                initAudioContext();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(120, audioCtx.currentTime + 0.08);
+
+                gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.09);
+            } catch (e) {}
+        }
+
+        function toggleMusic() {
+            initAudioContext();
+            const btnLabel = document.getElementById('music-label');
+            const btnIcon = document.getElementById('music-icon');
+
+            if (isPlayingMusic) {
+                isPlayingMusic = false;
+                clearTimeout(musicTimeout);
+                btnLabel.textContent = "Mélodie";
+                btnIcon.textContent = "🎵";
+            } else {
+                isPlayingMusic = true;
+                btnLabel.textContent = "Pause";
+                btnIcon.textContent = "⏸️";
+                playMelodySequence(0);
+                spawnFloatingNote();
+            }
+        }
+
+        function playMelodySequence(index) {
+            if (!isPlayingMusic) return;
+            if (index >= birthdayMelody.length) {
+                musicTimeout = setTimeout(() => playMelodySequence(0), 1200);
+                return;
+            }
+            const note = birthdayMelody[index];
+            playMusicNote(note.f, note.d);
+            if (Math.random() > 0.4) spawnFloatingNote();
+            musicTimeout = setTimeout(() => playMelodySequence(index + 1), note.d * 1000);
+        }
+
+        function spawnFloatingNote() {
+            const notes = ['♪', '♫', '♬', '✨'];
+            const el = document.createElement('div');
+            el.className = 'floating-note';
+            el.textContent = notes[Math.floor(Math.random() * notes.length)];
+            el.style.left = `${20 + Math.random() * 60}vw`;
+            el.style.bottom = `${15 + Math.random() * 20}vh`;
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), 2800);
+        }
+
+        /* ----------------------------------------------------
+           5. CANVASES : CONFETTIS ET PARTICULES DE FOND
+           ---------------------------------------------------- */
+        const confettiCanvas = document.getElementById('confetti-canvas');
+        const cCtx = confettiCanvas.getContext('2d');
+        const bgCanvas = document.getElementById('bg-particles');
+        const bgCtx = bgCanvas.getContext('2d');
+
+        let confettis = [];
+        let bgParticles = [];
+
+        function resizeCanvases() {
+            confettiCanvas.width = window.innerWidth;
+            confettiCanvas.height = window.innerHeight;
+            bgCanvas.width = window.innerWidth;
+            bgCanvas.height = window.innerHeight;
+        }
+
+        const colors = ['#FADADD', '#D48C94', '#B76E79', '#E5B869', '#F7D794', '#FFFFFF'];
+
+        function launchConfettiBurst(x, y, count = 70) {
+            for (let i = 0; i < count; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const speed = 3 + Math.random() * 10;
+                confettis.push({
+                    x, y,
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed - 3,
+                    size: 4 + Math.random() * 6,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    rotation: Math.random() * 360,
+                    rotSpeed: (Math.random() - 0.5) * 10,
+                    isHeart: Math.random() > 0.4,
+                    alpha: 1
+                });
+            }
+        }
+
+        function drawHeart(ctx, x, y, size) {
+            ctx.beginPath();
+            const top = size * 0.3;
+            ctx.moveTo(x, y + top);
+            ctx.bezierCurveTo(x, y, x - size / 2, y, x - size / 2, y + top);
+            ctx.bezierCurveTo(x - size / 2, y + (size + top) / 2, x, y + (size + top) / 1.4, x, y + size);
+            ctx.bezierCurveTo(x, y + (size + top) / 1.4, x + size / 2, y + (size + top) / 2, x + size / 2, y + top);
+            ctx.bezierCurveTo(x + size / 2, y, x, y, x, y + top);
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        function initBgParticles() {
+            bgParticles = [];
+            for (let i = 0; i < 30; i++) {
+                bgParticles.push({
+                    x: Math.random() * window.innerWidth,
+                    y: Math.random() * window.innerHeight,
+                    size: 3 + Math.random() * 6,
+                    speedY: 0.2 + Math.random() * 0.5,
+                    wobble: Math.random() * Math.PI * 2,
+                    color: i % 2 === 0 ? 'rgba(212, 140, 148, 0.22)' : 'rgba(229, 184, 105, 0.25)'
+                });
+            }
+        }
+
+        function animate() {
+            // Fond
+            bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+            bgParticles.forEach(p => {
+                p.wobble += 0.02;
+                p.y -= p.speedY;
+                p.x += Math.sin(p.wobble) * 0.3;
+                if (p.y < -10) { p.y = bgCanvas.height + 10; p.x = Math.random() * bgCanvas.width; }
+                bgCtx.fillStyle = p.color;
+                drawHeart(bgCtx, p.x, p.y, p.size);
+            });
+
+            // Confettis
+            cCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+            for (let i = confettis.length - 1; i >= 0; i--) {
+                const c = confettis[i];
+                c.x += c.vx;
+                c.y += c.vy;
+                c.vy += 0.2;
+                c.alpha -= 0.008;
+                if (c.alpha <= 0) { confettis.splice(i, 1); continue; }
+
+                cCtx.save();
+                cCtx.globalAlpha = c.alpha;
+                cCtx.translate(c.x, c.y);
+                cCtx.rotate((c.rotation * Math.PI) / 180);
+                cCtx.fillStyle = c.color;
+
+                if (c.isHeart) {
+                    drawHeart(cCtx, -c.size / 2, -c.size / 2, c.size * 1.2);
+                } else {
+                    cCtx.fillRect(-c.size / 2, -c.size / 2, c.size, c.size * 0.6);
+                }
+                cCtx.restore();
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', resizeCanvases);
+        window.onload = function () {
+            resizeCanvases();
+            initBgParticles();
+            animate();
+        };
+    </script>
 </body>
 </html>
